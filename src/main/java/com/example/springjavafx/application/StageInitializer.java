@@ -2,7 +2,7 @@ package com.example.springjavafx.application;
 
 import com.example.springjavafx.SpringJavafxApplication;
 import com.example.springjavafx.application.rest.ClientService;
-import com.example.springjavafx.controller.UIControllerNew;
+import com.example.springjavafx.controller.AppStatusGUI;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +26,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     public void onApplicationEvent(StageReadyEvent event)  {
         FXMLLoader fxmlLoader = new FXMLLoader(SpringJavafxApplication.class.getResource("UIController_new.fxml"));
 
-        UIControllerNew controller = new UIControllerNew(clientService.getUrlAvailabilityMap());
+        AppStatusGUI controller = new AppStatusGUI(clientService.getUrlAvailabilityMap());
         fxmlLoader.setController(controller);
         Stage stage = event.stage;
         stage.setScene(new Scene(fxmlLoader.load(), 600, 480));
