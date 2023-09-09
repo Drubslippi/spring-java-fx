@@ -2,57 +2,44 @@ package com.example.springjavafx.controller;
 
 import com.example.springjavafx.domain.UrlEntity;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.io.IOException;
 
 public class AppStatusGUI {
 
+    @FXML private Tab devTab;
+    @FXML private Tab qaTab;
+    @FXML private Tab uatTab;
+    @FXML private Tab prdTab;
 
-    @FXML private TextField searchField;
-    @FXML private TableView<UrlEntity> tableView;
-    @FXML private TableColumn<UrlEntity, String> applicationName;
-    @FXML private TableColumn<UrlEntity, String> applicationStatus;
+    private ObservableMap<String, UrlEntity> urlAvailabilityMapDev;
+    private ObservableMap<String, UrlEntity> urlAvailabilityMapQa;
 
-    private ObservableMap<String, UrlEntity> urlAvailabilityMap;
-
-    public AppStatusGUI(ObservableMap<String, UrlEntity> urlAvailabilityMap) {
-        this.urlAvailabilityMap = urlAvailabilityMap;
+    public AppStatusGUI(ObservableMap<String, UrlEntity> urlAvailabilityMapDev,
+                        ObservableMap<String, UrlEntity> urlAvailabilityMapQa) {
+        this.urlAvailabilityMapDev = urlAvailabilityMapDev;
+        this.urlAvailabilityMapQa = urlAvailabilityMapQa;
     }
 
     @FXML
     public void initialize() {
+        setTabContent(devTab, new DevController());
+    }
 
-        System.out.println("initializing");
+    private void setTabContent(Tab tab, TabContentController controller) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Content.fxml"));
+            loader.setController(controller);
+            tab.setContent(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        applicationName.setCellValueFactory(cellData -> cellData.getValue().urlValueProperty());
-        applicationStatus.setCellValueFactory(cellData -> cellData.getValue().urlStatusProperty());
-
-        var urlEntityList = urlAvailabilityMap.values();
-        var observableList = FXCollections.observableArrayList(urlEntityList);
-
-        FilteredList<UrlEntity> urlEntityFilteredList = new FilteredList<>(observableList, s -> true);
-
-        searchField.textProperty().addListener(obs -> {
-            String filter = searchField.getText();
-            if(filter == null || filter.length() == 0) {
-                urlEntityFilteredList.setPredicate(s -> true);
-            }
-            else {
-                urlEntityFilteredList.setPredicate(s -> s.getUrlValue().contains(filter));
-            }
-        });
-
-        tableView.setItems(urlEntityFilteredList);
     }
 
 }

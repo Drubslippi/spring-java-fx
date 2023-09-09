@@ -5,12 +5,26 @@ import javafx.beans.property.StringProperty;
 
 public class UrlEntity {
 
+    private final StringProperty applicationName = new SimpleStringProperty();
     private final StringProperty urlValue = new SimpleStringProperty();
     private final StringProperty urlStatus = new SimpleStringProperty();
 
-    public UrlEntity(String urlValue, String urlStatus) {
+    public UrlEntity(String applicationName, String urlValue, String urlStatus) {
+        this.applicationName.setValue(applicationName);
         this.urlValue.setValue(urlValue);
         this.urlStatus.setValue(urlStatus);
+    }
+
+    public String getApplicationName() {
+        return applicationName.get();
+    }
+
+    public StringProperty applicationNameProperty() {
+        return applicationName;
+    }
+
+    public void setApplicationName(String applicationName) {
+        this.applicationName.set(applicationName);
     }
 
     public String getUrlValue() {
