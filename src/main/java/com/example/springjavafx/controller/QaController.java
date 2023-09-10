@@ -9,7 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-public class DevController implements TabContentController{
+public class QaController implements TabContentController{
 
     @FXML private TextField searchField;
     @FXML private TableView<UrlEntity> tableView;
@@ -18,7 +18,7 @@ public class DevController implements TabContentController{
 
     private ObservableMap<String, UrlEntity> urlAvailabilityMap;
 
-    public DevController(ObservableMap<String, UrlEntity> urlAvailabilityMap) {
+    public QaController(ObservableMap<String, UrlEntity> urlAvailabilityMap) {
         this.urlAvailabilityMap = urlAvailabilityMap;
     }
 
@@ -28,7 +28,7 @@ public class DevController implements TabContentController{
 
         System.out.println("initializing");
 
-        applicationName.setCellValueFactory(cellData -> cellData.getValue().applicationNameProperty());
+        applicationName.setCellValueFactory(cellData -> cellData.getValue().urlValueProperty());
         applicationStatus.setCellValueFactory(cellData -> cellData.getValue().urlStatusProperty());
 
         var urlEntityListDev = urlAvailabilityMap.values();
@@ -42,7 +42,7 @@ public class DevController implements TabContentController{
                 urlEntityFilteredListDev.setPredicate(s -> true);
             }
             else {
-                urlEntityFilteredListDev.setPredicate(s -> s.getApplicationName().contains(filter));
+                urlEntityFilteredListDev.setPredicate(s -> s.getUrlValue().contains(filter));
             }
         });
 

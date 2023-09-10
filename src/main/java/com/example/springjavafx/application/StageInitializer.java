@@ -27,9 +27,9 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
         FXMLLoader fxmlLoader = new FXMLLoader(SpringJavafxApplication.class.getResource("Tabs.fxml"));
 
         AppStatusGUI controller = new AppStatusGUI(
-                clientService.getUrlAvailabilityMap(),
-                clientService.getUrlAvailabilityMapQa()
+                clientService.getUrlAvailabilityMap()
         );
+
         fxmlLoader.setController(controller);
         Stage stage = event.stage;
         stage.setScene(new Scene(fxmlLoader.load(), 600, 480));

@@ -1,6 +1,5 @@
 package com.example.springjavafx.application.rest;
 
-import com.example.springjavafx.domain.EnvironmentsEnum;
 import com.example.springjavafx.domain.UrlEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
@@ -17,20 +16,20 @@ public class ClientService {
 
     private final WebClient webClient;
 
-    private Map<EnvironmentsEnum, UrlEntity> urlAvailabilityMap = new HashMap<>();
+    private Map<String, UrlEntity> urlAvailabilityMap = new HashMap<>();
 
-    private ObservableMap<EnvironmentsEnum, UrlEntity> observableMap = FXCollections.observableMap(urlAvailabilityMap);
+    private ObservableMap<String, UrlEntity> observableMap = FXCollections.observableMap(urlAvailabilityMap);
 
     private void startUrlAvailabilityList() {
         for (Map.Entry entry : getMappedUrls().entrySet()) {
             observableMap.put(
-                    (EnvironmentsEnum) entry.getKey(),
+                    (String) entry.getKey(),
                     (UrlEntity) entry.getValue()
             );
         }
     }
 
-    public ObservableMap<EnvironmentsEnum, UrlEntity> getUrlAvailabilityMap() {
+    public ObservableMap<String, UrlEntity> getUrlAvailabilityMap() {
         return this.observableMap;
     }
 
@@ -48,18 +47,9 @@ public class ClientService {
             var responseStatusCode = Objects.requireNonNull(response.block()).getStatusCode().value();
 
             System.out.println(String.format("Response obtained: %s", responseStatusCode));
-            updateObservableMap(entry, String.valueOf(responseStatusCode));
             observableMap.get((String) entry.getKey()).setUrlStatus(String.valueOf(responseStatusCode));
         }
 
         return "success";
-    }
-
-    private void updateObservableMap(Map.Entry entry, String status) {
-        observableMap.entrySet().stream()
-                .filter(e -> e.getValue().equals(entry.getValue()))
-                .findFirst()
-                .ifPresent(e -> e.getValue().setUrlStatus(status));
-
     }
 }

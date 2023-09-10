@@ -8,11 +8,25 @@ public class UrlEntity {
     private final StringProperty applicationName = new SimpleStringProperty();
     private final StringProperty urlValue = new SimpleStringProperty();
     private final StringProperty urlStatus = new SimpleStringProperty();
+    private final StringProperty applicationEnv = new SimpleStringProperty();
 
-    public UrlEntity(String applicationName, String urlValue, String urlStatus) {
+    public UrlEntity(String applicationName, String urlValue, String urlStatus, String applicationEnv) {
         this.applicationName.setValue(applicationName);
         this.urlValue.setValue(urlValue);
         this.urlStatus.setValue(urlStatus);
+        this.applicationEnv.setValue(applicationEnv);
+    }
+
+    public String getApplicationEnv() {
+        return applicationEnv.get();
+    }
+
+    public StringProperty applicationEnvProperty() {
+        return applicationEnv;
+    }
+
+    public void setApplicationEnv(String applicationEnv) {
+        this.applicationEnv.set(applicationEnv);
     }
 
     public String getApplicationName() {

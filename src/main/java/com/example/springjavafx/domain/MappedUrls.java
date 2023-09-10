@@ -7,23 +7,23 @@ public interface MappedUrls {
 
     static List<UrlEntity> getObservedEntities() {
         return List.of(
-                new UrlEntity("Google", "https://www.google.com/", null),
-                new UrlEntity("Globoesporte", "https://ge.globo.com/", null),
-                new UrlEntity("StackOverflow", "https://stackoverflow.com/", null),
-                new UrlEntity("Chess.com", "https://www.chess.com/", null),
-                new UrlEntity("G1", "https://g1.globo.com/", null)
+                new UrlEntity("Google", "https://www.google.com/", null, "DEV"),
+                new UrlEntity("Globoesporte", "https://ge.globo.com/", null, "DEV"),
+                new UrlEntity("StackOverflow", "https://stackoverflow.com/", null, "QA"),
+                new UrlEntity("Chess.com", "https://www.chess.com/", null, "UAT"),
+                new UrlEntity("G1", "https://g1.globo.com/", null, "PRD")
         );
     }
 
-    static Map<EnvironmentsEnum, UrlEntity> getMappedUrls() {
+    static Map<String, UrlEntity> getMappedUrls() {
         var listOfUrlEntities = getObservedEntities();
 
         return Map.of(
-                EnvironmentsEnum.DEV, listOfUrlEntities.get(0),
-                EnvironmentsEnum.DEV, listOfUrlEntities.get(1),
-                EnvironmentsEnum.QA, listOfUrlEntities.get(2),
-                EnvironmentsEnum.UAT, listOfUrlEntities.get(3),
-                EnvironmentsEnum.PRD, listOfUrlEntities.get(4)
+                listOfUrlEntities.get(0).getApplicationName(), listOfUrlEntities.get(0),
+                listOfUrlEntities.get(1).getApplicationName(), listOfUrlEntities.get(1),
+                listOfUrlEntities.get(2).getApplicationName(), listOfUrlEntities.get(2),
+                listOfUrlEntities.get(3).getApplicationName(), listOfUrlEntities.get(3),
+                listOfUrlEntities.get(4).getApplicationName(), listOfUrlEntities.get(4)
         );
     }
 
